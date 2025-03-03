@@ -17,7 +17,7 @@ import javafx.util.Pair;
  * Sets up the game board and handles the user interface.
  */
 public class MainApplication extends Application {
-    private Controller controller = new Controller();
+    private final Controller controller = new Controller();
 
     /**
      * Starts the application and sets up the game board.
