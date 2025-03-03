@@ -10,24 +10,32 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
-import java.io.IOException;
-
+/**
+ * Main application class for the Minesweeper game.
+ * Sets up the game board and handles the user interface.
+ */
 public class MainApplication extends Application {
     private Controller controller = new Controller();
 
+    /**
+     * Starts the application and sets up the game board.
+     * @param stage The primary stage for this application.
+     */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         VBox root = new VBox();
         root.setSpacing(10);
         root.setFillWidth(false);
         root.setStyle("-fx-border-color: #bfbfbf #888888 #888888 #bfbfbf; -fx-border-width: 5; -fx-padding: 10; -fx-background-color: #999999; -fx-alignment: center;");
+
         // Header of Minesweeper
         HBox header = new HBox();
         header.setSpacing(10);
-        // set the header "inset" style
         add3DBorder(header);
 
+        // Add digits for mines left
         makeDigits(header, controller.getMinesLeft());
 
         // Smiley face
@@ -38,6 +46,7 @@ public class MainApplication extends Application {
         smileyImageView.setFitHeight(52);
         header.getChildren().add(smileyImageView);
 
+        // Add digits for time elapsed
         makeDigits(header, controller.getTimeElapsed());
 
         // Game area
@@ -49,20 +58,9 @@ public class MainApplication extends Application {
         // Create a 5x5 grid of images for the game area
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
-                Image image = new Image("file:src/main/resources/images/minesweeper-basic/cover.png");
-                ImageView imageView = new ImageView(image);
-                imageView.setFitWidth(48);
-                imageView.setFitHeight(48);
-                imageView.setOnMouseClicked(event -> {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        // Handle left-click
-                        controller.onSpaceClicked(imageView);
-                    } else if (event.getButton() == MouseButton.SECONDARY) {
-                        // TODO: Place flag
-                    }
-                });
+                ImageView imageView = getSpaceView();
                 gridPane.add(imageView, col, row);
-                controller.addToBoardMap(imageView, new BoardPair<>(row, col));
+                controller.addToBoardMap(imageView, new Pair<>(row, col));
             }
         }
 
@@ -75,14 +73,39 @@ public class MainApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Creates an ImageView for a space on the game board.
+     * @return The ImageView for the space.
+     */
+    private ImageView getSpaceView() {
+        Image image = new Image("file:src/main/resources/images/minesweeper-basic/cover.png");
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(48);
+        imageView.setFitHeight(48);
+        imageView.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                // Handle left-click
+                controller.onSpaceClicked(imageView);
+            } else if (event.getButton() == MouseButton.SECONDARY) {
+                // TODO: Place flag
+            }
+        });
+        return imageView;
+    }
+
+    /**
+     * Adds a 3D border style to the given pane.
+     * @param pane The pane to style.
+     */
     private void add3DBorder(Pane pane) {
         pane.setStyle("-fx-border-color: #888888 #bfbfbf #bfbfbf #888888; -fx-border-width: 5; -fx-alignment: center;");
     }
 
-    private void spaceClicked(ImageView imageView) {
-        controller.onSpaceClicked(imageView);
-    }
-
+    /**
+     * Creates and adds digit ImageViews to the header.
+     * @param header The header to add the digits to.
+     * @param digits The array that stores the digit ImageViews.
+     */
     private void makeDigits(HBox header, ImageView[] digits) {
         HBox digitsLeft = new HBox();
         for (int imageNum = 0; imageNum < 3; imageNum++) {
@@ -97,6 +120,10 @@ public class MainApplication extends Application {
         header.getChildren().add(digitsLeft);
     }
 
+    /**
+     * The main method to launch the application.
+     * @param args The command line arguments.
+     */
     public static void main(String[] args) {
         launch();
     }
