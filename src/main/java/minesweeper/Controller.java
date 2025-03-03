@@ -18,16 +18,16 @@ public class Controller {
     private final ImageView[] timeElapsed = new ImageView[3];
     private ImageView smileyImage;
 
+    private final Map<ImageView, Pair<Integer, Integer>> boardMap;
+
     private SpaceItem[][] boardState;
-    private Map<ImageView, Pair<Integer, Integer>> boardMap;
     private Set<Pair<Integer, Integer>> isMineMap;
 
     /**
      * Constructor for the Controller class.
      */
     public Controller() {
-        this.boardState = new SpaceItem[5][5];
-        this.boardMap = new HashMap<>();
+        this.boardMap = new HashMap<>(); // Image view stays the same, so no need to reinitialize every game
     }
 
     /**
@@ -42,9 +42,13 @@ public class Controller {
         // Initialize the board with mines
         this.addMines();
 
+        final int rows = 5;
+        final int cols = 5;
+
         // Initialize the board state
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 5; col++) {
+        this.boardState = new SpaceItem[rows][cols];
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 this.boardState[row][col] = new SpaceItem(this.isMineMap.contains(new Pair<>(row, col)));
             }
         }
