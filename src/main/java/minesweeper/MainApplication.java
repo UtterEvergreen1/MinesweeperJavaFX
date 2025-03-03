@@ -52,8 +52,8 @@ public class MainApplication extends Application {
 
         // Game area
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(1);
-        gridPane.setVgap(1);
+        gridPane.setHgap(2);
+        gridPane.setVgap(2);
         this.add3DBorder(gridPane);
 
         // Create a 5x5 grid of images for the game area
