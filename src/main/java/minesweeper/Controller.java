@@ -24,16 +24,22 @@ public class Controller {
 
     /**
      * Constructor for the Controller class.
-     * Initializes the board with mines and updates the board state.
      */
     public Controller() {
-        setup();
-    }
-
-    public void setup() {
-        // Initialize the board with mines
         this.boardState = new SpaceItem[5][5];
         this.boardMap = new HashMap<>();
+    }
+
+    /**
+     * Sets up the Minesweeper board.
+     */
+    public void setup() {
+        // Reset the game state
+        this.clickedSpaces = 0;
+        this.gameOver = false;
+        this.gameWon = false;
+
+        // Initialize the board with mines
         this.addMines();
 
         // Initialize the board state
@@ -47,6 +53,20 @@ public class Controller {
         for (Pair<Integer, Integer> mine : this.isMineMap) {
             this.updateMineNeighbors(mine.getKey(), mine.getValue());
         }
+        this.setNumMinesLeft(this.mines);
+    }
+
+    /**
+     * Sets the number of mines left in the header display.
+     * @param numMinesLeft The number of mines left.
+     */
+    private void setNumMinesLeft(int numMinesLeft) {
+        int hundreds = numMinesLeft / 100;
+        int tens = (numMinesLeft % 100) / 10;
+        int ones = numMinesLeft % 10;
+        this.minesLeft[0].setImage(new Image("file:src/main/resources/images/digits/" + hundreds + ".png"));
+        this.minesLeft[1].setImage(new Image("file:src/main/resources/images/digits/" + tens + ".png"));
+        this.minesLeft[2].setImage(new Image("file:src/main/resources/images/digits/" + ones + ".png"));
     }
 
     /**
@@ -126,15 +146,15 @@ public class Controller {
                 imageView.setImage(SpaceItem.getUnrevealedMineImage());
             }
         }
-        smileyImage.setImage(new Image("file:src/main/resources/images/minesweeper-basic/face-dead.png"));
+        this.smileyImage.setImage(new Image("file:src/main/resources/images/minesweeper-basic/face-dead.png"));
     }
 
     /**
      * Sets the game state to game won.
      */
     private void setGameWon() {
-        gameWon = true;
-        smileyImage.setImage(new Image("file:src/main/resources/images/minesweeper-basic/face-win.png"));
+        this.gameWon = true;
+        this.smileyImage.setImage(new Image("file:src/main/resources/images/minesweeper-basic/face-win.png"));
     }
 
     /**
@@ -142,7 +162,7 @@ public class Controller {
      * @param imageView The ImageView representing the clicked space.
      */
     public void onSpaceClicked(ImageView imageView) {
-        if (gameOver || gameWon) {
+        if (this.gameOver || this.gameWon) {
             return;
         }
         this.spaceClicked(imageView);
@@ -170,8 +190,8 @@ public class Controller {
         }
 
         // Check if the game is won
-        clickedSpaces++;
-        if (clickedSpaces == totalSpaces - mines) {
+        this.clickedSpaces++;
+        if (this.clickedSpaces == this.totalSpaces - this.mines) {
             setGameWon();
         }
     }

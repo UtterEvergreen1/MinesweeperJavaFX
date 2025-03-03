@@ -22,7 +22,7 @@ public class SpaceItem {
     }
 
     /**
-     * Gets the image for an unrevealed mine.
+     * Gets the image for an unrevealed mine (different from the revealed red mine image).
      * @return The image for an unrevealed mine.
      */
     static public Image getUnrevealedMineImage() {

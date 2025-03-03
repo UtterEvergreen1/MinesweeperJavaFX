@@ -25,6 +25,7 @@ public class MainApplication extends Application {
      */
     @Override
     public void start(Stage stage) {
+        // Combines the header and game area into a single VBox as the root pane
         VBox root = new VBox();
         root.setSpacing(10);
         root.setFillWidth(false);
@@ -33,10 +34,10 @@ public class MainApplication extends Application {
         // Header of Minesweeper
         HBox header = new HBox();
         header.setSpacing(10);
-        add3DBorder(header);
+        this.add3DBorder(header);
 
         // Add digits for mines left
-        makeDigits(header, controller.getMinesLeft());
+        this.makeDigits(header, controller.getMinesLeft());
 
         // Smiley face
         Image smileyImage = new Image("file:src/main/resources/images/minesweeper-basic/face-smile.png");
@@ -47,13 +48,13 @@ public class MainApplication extends Application {
         header.getChildren().add(smileyImageView);
 
         // Add digits for time elapsed
-        makeDigits(header, controller.getTimeElapsed());
+        this.makeDigits(header, controller.getTimeElapsed());
 
         // Game area
         GridPane gridPane = new GridPane();
         gridPane.setHgap(1);
         gridPane.setVgap(1);
-        add3DBorder(gridPane);
+        this.add3DBorder(gridPane);
 
         // Create a 5x5 grid of images for the game area
         for (int row = 0; row < 5; row++) {
@@ -63,6 +64,7 @@ public class MainApplication extends Application {
                 controller.addToBoardMap(imageView, new Pair<>(row, col));
             }
         }
+        controller.setup();
 
         root.getChildren().add(header);
         root.getChildren().add(gridPane);
