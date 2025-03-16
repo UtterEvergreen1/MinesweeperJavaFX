@@ -45,9 +45,7 @@ public class MainApplication extends Application {
         controller.setSmileyImage(smileyImageView);
         smileyImageView.setFitWidth(52);
         smileyImageView.setFitHeight(52);
-        smileyImageView.setOnMouseClicked(event -> {
-            this.resetGame();
-        });
+        smileyImageView.setOnMouseClicked(event -> this.resetGame());
         header.getChildren().add(smileyImageView);
 
         // Add digits for time elapsed
