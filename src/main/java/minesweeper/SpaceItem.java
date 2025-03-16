@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
  */
 public class SpaceItem {
     private final boolean mine;
+    private boolean isFlagged;
     private boolean isRevealed;
     private int numAdjacentMines;
 
@@ -27,6 +28,14 @@ public class SpaceItem {
      */
     static public Image getUnrevealedMineImage() {
         return new Image("file:src/main/resources/images/minesweeper-basic/mine-grey.png");
+    }
+
+    static public Image getFlagImage() {
+        return new Image("file:src/main/resources/images/minesweeper-basic/flag.png");
+    }
+
+    static public Image getCoverImage() {
+        return new Image("file:src/main/resources/images/minesweeper-basic/cover.png");
     }
 
     /**
@@ -49,6 +58,10 @@ public class SpaceItem {
         return this.mine;
     }
 
+    public boolean isFlagged() {
+        return this.isFlagged;
+    }
+
     /**
      * Checks if the space is revealed.
      * @return True if the space is revealed, false otherwise.
@@ -63,6 +76,10 @@ public class SpaceItem {
      */
     public void setRevealed(boolean isRevealed) {
         this.isRevealed = isRevealed;
+    }
+
+    public void setFlagged(boolean isFlagged) {
+        this.isFlagged = isFlagged;
     }
 
     /**

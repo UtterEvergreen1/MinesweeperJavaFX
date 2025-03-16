@@ -45,25 +45,20 @@ public class MainApplication extends Application {
         controller.setSmileyImage(smileyImageView);
         smileyImageView.setFitWidth(52);
         smileyImageView.setFitHeight(52);
+        smileyImageView.setOnMouseClicked(event -> {
+            this.resetGame();
+        });
         header.getChildren().add(smileyImageView);
 
         // Add digits for time elapsed
         this.makeDigits(header, controller.getTimeElapsed());
 
-        // Game area
-        GridPane gridPane = new GridPane();
-        gridPane.setHgap(2);
-        gridPane.setVgap(2);
-        this.add3DBorder(gridPane);
+        Difficulty difficulty = Difficulty.BEGINNER;
+        final int rows = difficulty.getRows();
+        final int cols = difficulty.getCols();
 
-        // Create a 5x5 grid of images for the game area
-        for (int row = 0; row < 5; row++) {
-            for (int col = 0; col < 5; col++) {
-                ImageView imageView = getSpaceView();
-                gridPane.add(imageView, col, row);
-                controller.addToBoardMap(imageView, new Pair<>(row, col));
-            }
-        }
+        GridPane gridPane = this.setupBoard(rows, cols);
+        controller.setDifficulty(difficulty);
         controller.setup();
 
         root.getChildren().add(header);
@@ -75,22 +70,44 @@ public class MainApplication extends Application {
         stage.show();
     }
 
+    private GridPane setupBoard(int rows, int cols) {
+        // Game area
+        GridPane gridPane = new GridPane();
+        gridPane.setHgap(2);
+        gridPane.setVgap(2);
+        this.add3DBorder(gridPane);
+
+        // Create a XY grid of images for the game area
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                ImageView imageView = getSpaceView(240 / cols);
+                gridPane.add(imageView, col, row);
+                controller.addToBoardMap(imageView, new Pair<>(row, col));
+            }
+        }
+
+        return gridPane;
+    }
+
+    private void resetGame() {
+        controller.setup();
+    }
+
     /**
      * Creates an ImageView for a space on the game board.
      * @return The ImageView for the space.
      */
-    private ImageView getSpaceView() {
+    private ImageView getSpaceView(int size) {
         Image image = new Image("file:src/main/resources/images/minesweeper-basic/cover.png");
         ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(48);
-        imageView.setFitHeight(48);
+        imageView.setFitWidth(size);
+        imageView.setFitHeight(size);
         imageView.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                // Handle left-click
-                controller.onSpaceClicked(imageView);
-            } else if (event.getButton() == MouseButton.SECONDARY) {
-                // TODO: Place flag
+            boolean leftClick = event.getButton() == MouseButton.PRIMARY;
+            if (!leftClick && event.getButton() != MouseButton.SECONDARY) {
+                return;
             }
+            controller.onSpaceClicked(imageView, leftClick);
         });
         return imageView;
     }
