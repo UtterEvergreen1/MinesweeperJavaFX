@@ -30,6 +30,11 @@ public class Controller {
         this.boardMap = new HashMap<>(); // Image view stays the same, so no need to reinitialize every game
     }
 
+    /**
+     * Sets the difficulty level of the Minesweeper game.
+     *
+     * @param difficulty The difficulty level.
+     */
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
@@ -185,7 +190,7 @@ public class Controller {
             ImageView imageView = entry.getKey();
             Pair<Integer, Integer> coords = entry.getValue();
             SpaceItem space = this.boardState[coords.getKey()][coords.getValue()];
-            if (space.isMine() && !space.isRevealed()) {
+            if (space.isMine() && !space.isRevealed() && !space.isFlagged()) {
                 imageView.setImage(SpaceItem.getUnrevealedMineImage());
             }
         }
