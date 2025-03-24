@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The HighScore class manages the high scores for the Minesweeper game.
+ * It supports reading from and writing to a file, and adding new high scores.
+ */
 public class HighScore implements Comparable<HighScore> {
     public static final String FILENAME = "highscores.txt";
     public static List<HighScore> highScores = new ArrayList<>();
@@ -13,24 +17,53 @@ public class HighScore implements Comparable<HighScore> {
     private final int score;
     private final Difficulty difficulty;
 
+    /**
+     * Constructs a new HighScore object.
+     *
+     * @param name       the name of the player
+     * @param score      the score achieved by the player
+     * @param difficulty the difficulty level of the game
+     */
     public HighScore(String name, int score, Difficulty difficulty) {
         this.name = name;
         this.score = score;
         this.difficulty = difficulty;
     }
 
+    /**
+     * Gets the name of the player.
+     *
+     * @return the name of the player
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the score achieved by the player.
+     *
+     * @return the score achieved by the player
+     */
     public int getScore() {
         return score;
     }
 
+    /**
+     * Gets the difficulty level of the game.
+     *
+     * @return the difficulty level of the game
+     */
     public Difficulty getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * Checks if a given score is a high score for a specific difficulty level.
+     *
+     * @param score      the score to check
+     * @param difficulty the difficulty level to check
+     * @return true if the score is a high score, false otherwise
+     */
     public static boolean isHighScore(int score, Difficulty difficulty) {
         if (HighScore.highScores.isEmpty()) {
             return true;
@@ -45,6 +78,11 @@ public class HighScore implements Comparable<HighScore> {
         return true;
     }
 
+    /**
+     * Gets the high scores as a formatted string.
+     *
+     * @return the high scores as a formatted string
+     */
     public static String getHighScoreText() {
         String highScores = HighScore.highScoreText();
         if (highScores.isEmpty()) {
@@ -53,6 +91,11 @@ public class HighScore implements Comparable<HighScore> {
         return highScores;
     }
 
+    /**
+     * Gets the high scores as a formatted string. Used internally for writing to a file.
+     *
+     * @return the high scores as a formatted string
+     */
     private static String highScoreText() {
         if (highScores.isEmpty()) {
             return "";
@@ -66,6 +109,13 @@ public class HighScore implements Comparable<HighScore> {
         return sb.toString();
     }
 
+    /**
+     * Adds a new high score.
+     *
+     * @param name       the name of the player
+     * @param score      the score achieved by the player
+     * @param difficulty the difficulty level of the game
+     */
     public static void addHighScore(String name, int score, Difficulty difficulty) {
 
         // check if difficulty already has a high score to only keep one
@@ -85,11 +135,17 @@ public class HighScore implements Comparable<HighScore> {
         }
     }
 
+    /**
+     * Resets all high scores.
+     */
     public static void resetHighScores() {
         highScores.clear();
         HighScore.writeHighScores();
     }
 
+    /**
+     * Reads the high scores from a file.
+     */
     public static void readHighScores() {
         File file = new File(FILENAME);
         HighScore.highScores.clear();
@@ -117,6 +173,9 @@ public class HighScore implements Comparable<HighScore> {
         Collections.sort(highScores);
     }
 
+    /**
+     * Writes the high scores to a file.
+     */
     public static void writeHighScores() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(FILENAME));
@@ -128,6 +187,13 @@ public class HighScore implements Comparable<HighScore> {
         }
     }
 
+    /**
+     * Compares this high score with another high score. First compares the difficulty, then the score.
+     *
+     * @param o the other high score to compare to
+     * @return a negative integer, zero, or a positive integer as this high score
+     *         is less than, equal to, or greater than the specified high score
+     */
     @Override
     public int compareTo(HighScore o) {
         if (this.difficulty != o.difficulty) {

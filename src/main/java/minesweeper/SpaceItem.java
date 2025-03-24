@@ -29,18 +29,34 @@ public class SpaceItem {
         return new Image("file:src/main/resources/images/minesweeper-basic/mine-grey.png");
     }
 
+    /**
+     * Gets the image for a revealed mine.
+     * @return The image for a revealed mine.
+     */
     static public Image getRevealedMineImage() {
         return new Image("file:src/main/resources/images/minesweeper-basic/mine-red.png");
     }
 
+    /**
+     * Gets the image for a flag.
+     * @return The image for a flag.
+     */
     static public Image getFlagImage() {
         return new Image("file:src/main/resources/images/minesweeper-basic/flag.png");
     }
 
+    /**
+     * Gets the image for a unrevealed space.
+     * @return The image for a unrevealed space.
+     */
     static public Image getCoverImage() {
         return new Image("file:src/main/resources/images/minesweeper-basic/cover.png");
     }
 
+    /**
+     * Gets the image for a non-mine revealed space.
+     * @return The image for a non-mine revealed space.
+     */
     static public Image getNumImage(int num) {
         return new Image("file:src/main/resources/images/minesweeper-basic/" + num + ".png");
     }

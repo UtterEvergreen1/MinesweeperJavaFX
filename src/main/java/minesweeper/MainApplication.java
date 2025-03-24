@@ -31,6 +31,9 @@ public class MainApplication extends Application {
     private Text highScoreDisplayText;
     private HBox header;
 
+    /**
+     * Creates the header for the Minesweeper game.
+     */
     private void makeHeader() {
         // Header of Minesweeper
         this.header = new HBox();
@@ -57,6 +60,9 @@ public class MainApplication extends Application {
         this.makeDigits(this.header, this.controller.getTimeElapsed(), false);
     }
 
+    /**
+     * Creates the menu for selecting the difficulty level.
+     */
     private void makeMenu() {
         // Create the difficulty selection menu
         this.menu = new VBox(10);
@@ -78,6 +84,9 @@ public class MainApplication extends Application {
         this.menu.getChildren().addAll(text, beginnerButton, intermediateButton, expertButton);
     }
 
+    /**
+     * Creates the input for submitting a high score.
+     */
     private void makeHighScoreInput() {
         // Create the high score input VBox
         this.highScoreInput = new VBox(10);
@@ -98,6 +107,9 @@ public class MainApplication extends Application {
         this.highScoreInput.setVisible(false);
     }
 
+    /**
+     * Creates the display for showing the high scores.
+     */
     private void makeHighScoreDisplay() {
         // Create the high score display VBox
         this.highScoreDisplay = new VBox(10);
@@ -132,6 +144,9 @@ public class MainApplication extends Application {
         this.highScoreDisplay.setVisible(false);
     }
 
+    /**
+     * Creates the root pane for the game.
+     */
     private void makeGameRoot() {
         // Combines the header and game area into a single VBox as the root pane
         this.gameRoot = new VBox();
@@ -151,6 +166,9 @@ public class MainApplication extends Application {
         this.makeHighScoreDisplay();
     }
 
+    /**
+     * Creates the main scene for the application.
+     */
     private void makeScene() {
         this.mainScene = new Scene(this.root, 280, 360);
         this.mainScene.setOnKeyPressed(event -> {
@@ -163,6 +181,9 @@ public class MainApplication extends Application {
         this.mainStage.show();
     }
 
+    /**
+     * Combines the game board, menu, and high score input into a single stacked root pane.
+     */
     private void makeRoot() {
         // Overlay the menu and high score input on top of the game board with a StackPane
         this.root = new StackPane();
@@ -183,6 +204,9 @@ public class MainApplication extends Application {
         this.makeScene();
     }
 
+    /**
+     * Updates the high scores with the player's name and time.
+     */
     private void updateHighScores() {
         String playerName = this.nameField.getText();
         // Handle high score submission
@@ -192,6 +216,9 @@ public class MainApplication extends Application {
         this.highScoreDisplayText.setText(HighScore.getHighScoreText());
     }
 
+    /**
+     * Toggles the visibility of the high score display.
+     */
     private void toggleHighScores() {
         if (this.highScoreDisplay.isVisible()) {
             this.highScoreDisplay.setVisible(false);
@@ -203,11 +230,24 @@ public class MainApplication extends Application {
         this.highScoreDisplay.setVisible(true);
     }
 
+    /**
+     * Saves the high score to the high score list.
+     * @param playerName The name of the player.
+     * @param score The score of the player.
+     * @param difficulty The difficulty level of the game.
+     */
     private void saveHighScore(String playerName, int score, Difficulty difficulty) {
         HighScore.addHighScore(playerName, score, difficulty);
         HighScore.writeHighScores();
     }
 
+    /**
+     * Sets up the game board with the given number of rows and columns.
+     * @param rows The number of rows in the game board.
+     * @param cols The number of columns in the game board.
+     * @param tileSize The size of each tile in the game board.
+     * @return The game board as a GridPane.
+     */
     private GridPane setupBoard(int rows, int cols, int tileSize) {
         // Game area
         GridPane gridPane = new GridPane();
@@ -227,10 +267,17 @@ public class MainApplication extends Application {
         return gridPane;
     }
 
+    /**
+     * Resets the game to the initial state.
+     */
     private void resetGame() {
         this.controller.setup();
     }
 
+    /**
+     * Sets the difficulty level of the game.
+     * @param difficulty The difficulty level to set.
+     */
     private void setDifficulty(Difficulty difficulty) {
         this.controller.setDifficulty(difficulty);
         this.controller.clearBoardMap();

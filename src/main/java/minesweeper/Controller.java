@@ -11,6 +11,9 @@ import javafx.util.Pair;
 
 import java.util.*;
 
+/**
+ * Controller class for the Minesweeper game. Handles all the game logic and states.
+ */
 public class Controller {
     private Difficulty difficulty;
     private int clickedSpaces = 0;
@@ -83,6 +86,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Pauses the game if possible.
+     */
     public void pauseGame() {
         if (this.gameOver || this.gameWon || !this.gameStarted || this.gamePaused) {
             return;
@@ -92,6 +98,9 @@ public class Controller {
         this.timeline.pause();
     }
 
+    /**
+     * Resumes the game if previously paused.
+     */
     public void resumeGame() {
         if (this.gameOver || this.gameWon || !this.gameStarted || !this.gamePaused) {
             return;
@@ -245,10 +254,20 @@ public class Controller {
         return this.timeElapsed;
     }
 
+    /**
+     * Gets the time elapsed in seconds.
+     *
+     * @return The time elapsed in seconds.
+     */
     public int getTimeElapsedSeconds() {
         return this.time;
     }
 
+    /**
+     * Gets the difficulty level of the Minesweeper game.
+     *
+     * @return The difficulty level.
+     */
     public Difficulty getDifficulty() {
         return this.difficulty;
     }

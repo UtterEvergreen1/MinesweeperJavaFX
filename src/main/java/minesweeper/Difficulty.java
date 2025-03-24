@@ -8,6 +8,13 @@ public enum Difficulty {
     BEGINNER("Beginner", 8, 8, 10, 30, 310, 425),
     INTERMEDIATE("Intermediate", 16, 16, 40, 30, 575, 670),
     EXPERT("Expert", 16, 32, 99, 25, 945, 600);
+
+    /**
+     * Converts a string to a Difficulty enum.
+     *
+     * @param s the string representation of the difficulty
+     * @return the corresponding Difficulty enum, or null if no match is found
+     */
     public static Difficulty fromString(String s) {
         return switch (s) {
             case "Beginner" -> BEGINNER;
@@ -27,10 +34,15 @@ public enum Difficulty {
     private final int totalSpaces;
 
     /**
-     * Constructor for the Difficulty class.
-     * @param rows The number of rows in the game board.
-     * @param cols The number of columns in the game board.
-     * @param mines The number of mines in the game board.
+     * Constructor for the Difficulty enum.
+     *
+     * @param name the name of the difficulty level
+     * @param rows the number of rows in the game board
+     * @param cols the number of columns in the game board
+     * @param mines the number of mines in the game board
+     * @param tileSize the size of each tile in the game board
+     * @param screenWidth the width of the game screen
+     * @param screenHeight the height of the game screen
      */
     Difficulty(String name, int rows, int cols, int mines, int tileSize, int screenWidth, int screenHeight) {
         this.name = name;
@@ -43,13 +55,19 @@ public enum Difficulty {
         this.totalSpaces = rows * cols;
     }
 
+    /**
+     * Gets the name of the difficulty level.
+     *
+     * @return the name of the difficulty level
+     */
     public String getName() {
         return name;
     }
 
     /**
      * Gets the number of rows in the game board.
-     * @return The number of rows.
+     *
+     * @return the number of rows
      */
     public int getRows() {
         return rows;
@@ -57,7 +75,8 @@ public enum Difficulty {
 
     /**
      * Gets the number of columns in the game board.
-     * @return The number of columns.
+     *
+     * @return the number of columns
      */
     public int getCols() {
         return cols;
@@ -65,27 +84,44 @@ public enum Difficulty {
 
     /**
      * Gets the number of mines in the game board.
-     * @return The number of mines.
+     *
+     * @return the number of mines
      */
     public int getMines() {
         return mines;
     }
 
+    /**
+     * Gets the size of each tile in the game board.
+     *
+     * @return the size of each tile
+     */
     public int getTileSize() {
         return tileSize;
     }
 
+    /**
+     * Gets the width of the game screen.
+     *
+     * @return the width of the game screen
+     */
     public int getScreenWidth() {
         return screenWidth;
     }
 
+    /**
+     * Gets the height of the game screen.
+     *
+     * @return the height of the game screen
+     */
     public int getScreenHeight() {
         return screenHeight;
     }
 
     /**
      * Gets the total number of spaces in the game board.
-     * @return The total number of spaces.
+     *
+     * @return the total number of spaces
      */
     public int getTotalSpaces() {
         return totalSpaces;
@@ -93,12 +129,18 @@ public enum Difficulty {
 
     /**
      * Gets the total number of clicks required to win the game.
-     * @return The total number of clicks required to win.
+     *
+     * @return the total number of clicks required to win
      */
     public int getTotalClicks() {
         return totalSpaces - mines;
     }
 
+    /**
+     * Returns the name of the difficulty level as a string.
+     *
+     * @return the name of the difficulty level
+     */
     @Override
     public String toString() {
         return name;
