@@ -512,16 +512,9 @@ public class Controller {
      * @param leftClick True if the left mouse button was clicked, false otherwise.
      */
     protected void spaceClicked(ImageView imageView, boolean leftClick) {
-        // Start the game if first left click
-        if (!this.gameStarted && leftClick) {
-            this.gameStarted = true;
-            this.addMines(imageView);
-        }
-
         // Get the space at the clicked coordinates
         Pair<Integer, Integer> coords = this.boardMap.get(imageView);
         SpaceItem space = this.boardState[coords.getKey()][coords.getValue()];
-        this.revealedNumberClicked(coords.getKey(), coords.getValue());
 
         if (space.isRevealed()) {
             return;
@@ -536,6 +529,13 @@ public class Controller {
             return;
         }
 
+        // Start the game if first left click
+        if (!this.gameStarted) {
+            this.gameStarted = true;
+            this.addMines(imageView);
+        }
+
+        this.revealedNumberClicked(coords.getKey(), coords.getValue());
         this.recursiveReveal(coords.getKey(), coords.getValue());
     }
 }
