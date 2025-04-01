@@ -516,10 +516,6 @@ public class Controller {
         Pair<Integer, Integer> coords = this.boardMap.get(imageView);
         SpaceItem space = this.boardState[coords.getKey()][coords.getValue()];
 
-        if (space.isRevealed()) {
-            return;
-        }
-
         if (!leftClick) {
             this.handleFlag(space, imageView);
             return;
@@ -536,6 +532,10 @@ public class Controller {
         }
 
         this.revealedNumberClicked(coords.getKey(), coords.getValue());
+        if (space.isRevealed()) {
+            return;
+        }
+
         this.recursiveReveal(coords.getKey(), coords.getValue());
     }
 }
